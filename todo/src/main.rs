@@ -5,8 +5,8 @@ fn main() {
         println!("2. Add a todo\n");
         println!("3. Delete a todo\n");
         
-        // let entered_number= stdin();
-        // let list: Vec<String>= Vec::new();
+        let entered_number= stdin();
+        let mut list: Vec<String>= Vec::new();
         
         match entered_number{
             1 => showUp(&list),
@@ -16,15 +16,26 @@ fn main() {
         }
     }
 
-    fn showUp(){
+    fn listUp(&mut list: Vec<String>){
         for( i in list){
             println!("{}. {}", i, element)
         }
     }
 
-    fn adding(){
-        // let inputed= stdin();
+    fn adding(mut list: Vec<String>) -> Vec<String>{
+        let inputed= stdin();
         
+        list.append(inputed);
+        
+        list
+    }
+
+    fn deleting(mut list: Vec<String>) -> Vec<String> {
+        // get index
+
+        list.remove(index);
+        
+        list
     }
 }
 
