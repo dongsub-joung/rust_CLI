@@ -1,3 +1,5 @@
+use std::io;
+
 fn main() {
     loop{
         println!("Press a button\n");
@@ -9,9 +11,9 @@ fn main() {
         let mut list: Vec<String>= Vec::new();
         
         match entered_number{
-            1 => showUp(&list),
-            2 => adding(&list),
-            3 => deleting(&list),
+            1 => listUp(&list),
+            2 => adding(list),
+            3 => deleting(list),
             _ => none
         }
     }
@@ -23,9 +25,12 @@ fn main() {
     }
 
     fn adding(mut list: Vec<String>) -> Vec<String>{
-        let inputed= stdin();
-        
-        list.append(inputed);
+        let mut inputed= String::new();
+        let stdin= io::stdin();
+
+        stdin.read_line(&mut inputed);
+       
+        list.push(inputed);
         
         list
     }
