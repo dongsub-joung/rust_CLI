@@ -3,23 +3,28 @@ use std::io;
 fn main() {
     loop{
         let mut list: Vec<String>= Vec::new();
-        
+        list.push(String::from("todo"));
+
         println!("Press a button\n");
         println!("1. Show up list\n");
         println!("2. Add a todo\n");
         println!("3. Delete a todo\n");
        
         let number= inputing();
-        
+       
+        // @todo 
+        // fix list= list.push(inputed);
+        // fix list= list.remove(inputed_index)
         match number{
-            1i32 => listUp(&list),
+            1i32 => list_up(&list),
             2i32 => list= adding(list),
             3i32 => list= deleting(list),
             _ => continue,
         }
     }
 
-    fn listUp(mut list: &Vec<String>){
+    fn list_up(list: &Vec<String>){
+        // 1i32 => println!(":?", list),
         println!("{:?}", list)
     }
 
