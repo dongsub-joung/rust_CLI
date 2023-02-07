@@ -13,8 +13,8 @@ fn main() {
         
         match number{
             1i32 => listUp(&list),
-            2i32 => adding(&list),
-            3i32 => deleting(&list),
+            2i32 => list= adding(list),
+            3i32 => list= deleting(list),
             _ => continue,
         }
     }
@@ -23,17 +23,23 @@ fn main() {
         println!("{:?}", list)
     }
 
-    fn adding(mut list: &Vec<String>){
+    fn adding(mut list: Vec<String>) -> Vec<String>{
         let inputed= inputing_string();
        
         let mut list_new= list;
         
-        list.push(inputed);
+        list_new.push(inputed);
+
+        list_new
     }
 
-    fn deleting(mut list: &Vec<String>){
+    fn deleting(mut list: Vec<String>) -> Vec<String>{
         let index= inputing();
-        list.remove(index as usize);
+        let mut list_new= list;
+        
+        list_new.remove(index as usize);
+
+        list_new
     }
 
     fn inputing() -> i32{ 
