@@ -1,7 +1,7 @@
 use std::io;
 
 // @todo
-// trim, last word is hide "\n"
+// lock stdin buffer 
 fn main() {
     loop{
         let mut list: Vec<String>= Vec::new();
@@ -14,16 +14,15 @@ fn main() {
         let number= inputing();
        
         match number{
-            0i32 => break,
-            1i32 => list_up(&list),
-            2i32 => list= adding(list),
-            3i32 => list= deleting(list),
-            _ => list_up(&list),
+            0 => break,
+            1 => list_up(list),
+            2 => list= adding(list),
+            3 => list= deleting(list),
+            _ => list_up(list),
         }
     }
 
-    fn list_up(list: &Vec<String>){
-        // 1i32 => println!(":?", list),
+    fn list_up(list: Vec<String>){
         println!("{:?}", list)
     }
 
@@ -46,7 +45,7 @@ fn main() {
     fn inputing() -> i32{ 
         let mut std_number= String::new();   
         let strs= io::stdin().read_line(&mut std_number);
-        let number_string= strs.unwrap().to_string();
+        let number_string= strs.unwrap().to_string().trim_end().to_string();
         
         number_string.parse().unwrap()
     }
@@ -54,9 +53,8 @@ fn main() {
     fn inputing_string() -> String{
         let mut inputed= String::new();
         let strs= io::stdin().read_line(&mut inputed);
-        let result= strs.unwrap().to_string();
         
-        result
+        strs.unwrap().to_string().trim_end().to_string()
     }
 }
 
