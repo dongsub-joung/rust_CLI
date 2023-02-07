@@ -24,11 +24,10 @@ fn main() {
     }
 
     fn adding(mut list: &Vec<String>){
-        let mut inputed= String::new();
-        let stdin= io::stdin();
-
-        stdin.read_line(&mut inputed);
+        let inputed= inputing_string();
        
+        let mut list_new= list;
+        
         list.push(inputed);
     }
 
@@ -43,6 +42,14 @@ fn main() {
         let number_string= strs.unwrap().to_string();
         
         number_string.parse().unwrap()
+    }
+
+    fn inputing_string() -> String{
+        let mut inputed= String::new();
+        let strs= io::stdin().read_line(&mut inputed);
+        let result= strs.unwrap().to_string();
+        
+        result
     }
 }
 
