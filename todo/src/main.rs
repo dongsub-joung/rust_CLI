@@ -1,9 +1,8 @@
 use std::io;
 
 fn main() {
-    loop{
+    whill number==0{
         let mut list: Vec<String>= Vec::new();
-        list.push(String::from("todo"));
 
         println!("Press a button\n");
         println!("1. Show up list\n");
@@ -12,10 +11,8 @@ fn main() {
        
         let number= inputing();
        
-        // @todo 
-        // fix list= list.push(inputed);
-        // fix list= list.remove(inputed_index)
         match number{
+            0i32 => break,
             1i32 => list_up(&list),
             2i32 => list= adding(list),
             3i32 => list= deleting(list),
@@ -30,21 +27,18 @@ fn main() {
 
     fn adding(mut list: Vec<String>) -> Vec<String>{
         let inputed= inputing_string();
-       
-        let mut list_new= list;
-        
-        list_new.push(inputed);
 
-        list_new
+        list.push(inputed);
+
+        list
     }
 
     fn deleting(mut list: Vec<String>) -> Vec<String>{
         let index= inputing();
-        let mut list_new= list;
         
-        list_new.remove(index as usize);
+        list.remove(index as usize);
 
-        list_new
+        list
     }
 
     fn inputing() -> i32{ 
