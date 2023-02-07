@@ -1,9 +1,11 @@
 use std::io;
 
+// @todo
+// trim, last word is hide "\n"
 fn main() {
-    whill number==0{
+    loop{
         let mut list: Vec<String>= Vec::new();
-
+    
         println!("Press a button\n");
         println!("1. Show up list\n");
         println!("2. Add a todo\n");
@@ -16,7 +18,7 @@ fn main() {
             1i32 => list_up(&list),
             2i32 => list= adding(list),
             3i32 => list= deleting(list),
-            _ => continue,
+            _ => list_up(&list),
         }
     }
 
