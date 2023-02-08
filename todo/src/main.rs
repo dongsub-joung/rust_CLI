@@ -1,8 +1,7 @@
-use std::io;
+use std::io::{self, stdin};
 
 // @todo
-// 1. lock stdin buffer 
-// 2. char's number -> String
+// Need deep copy
 fn main() {
     loop{
         let mut list: Vec<String>= Vec::new();
@@ -45,17 +44,19 @@ fn main() {
 
     fn inputing() -> i32{ 
         let mut std_number= String::new();   
-        let strs= io::stdin().read_line(&mut std_number);
-        let number_string= strs.unwrap().to_string().trim_end().to_string();
+        stdin().read_line(&mut std_number).unwrap();
+        let result :usize= std_number.trim_end().parse().unwrap();
         
-        number_string.parse().unwrap()
+        result as i32 
     }
 
     fn inputing_string() -> String{
         let mut inputed= String::new();
-        let strs= io::stdin().read_line(&mut inputed);
+        stdin().read_line(&mut inputed).unwrap();
         
-        strs.unwrap().to_string().trim_end().to_string()
+        let result= inputed.trim_end().to_string();
+
+        result
     }
 }
 
