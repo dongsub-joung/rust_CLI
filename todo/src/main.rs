@@ -26,20 +26,22 @@ fn main() {
         println!("{:?}", list)
     }
 
-    fn adding(mut list: Vec<String>) -> Vec<String>{
+    fn adding(list: Vec<String>) -> Vec<String>{
         let inputed= inputing_string();
+        let mut list_new= list.clone();
 
-        list.push(inputed);
+        list_new.push(inputed);
 
-        list
+        list_new
     }
 
-    fn deleting(mut list: Vec<String>) -> Vec<String>{
+    fn deleting(list: Vec<String>) -> Vec<String>{
         let index= inputing();
-        
-        list.remove(index as usize);
+        let mut list_new= list.clone();
 
-        list
+        list_new.remove(index as usize);
+
+        list_new
     }
 
     fn inputing() -> i32{ 
