@@ -1,7 +1,8 @@
 use std::io;
 
 // @todo
-// lock stdin buffer 
+// 1. lock stdin buffer 
+// 2. char's number -> String
 fn main() {
     loop{
         let mut list: Vec<String>= Vec::new();
