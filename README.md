@@ -3,4 +3,5 @@ Some tools written rust
 
 1. CLI TODO LIST
 
-> todo) binding mySQL 
+> todo) bind mySQL 
+> contribute cargo and docker
