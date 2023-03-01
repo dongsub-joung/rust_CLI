@@ -1,7 +1,8 @@
+mod tools;
+
+use tools;
 use std::io::{self, stdin};
 
-// @todo
-// Need deep copy
 fn main() {
     loop{
         let mut list: Vec<String>= Vec::new();
@@ -15,43 +16,25 @@ fn main() {
         match number{
             0 => break,
             1 => {
-                let list_backup= list.clone();
-                let added_list= adding(list_backup);
-                list= added_list.clone();
-                list_up(added_list);
+                let inputed= inputing_string();
                 
+                let list= list.clone();
+                
+                let added_list= tools::Add::adding(inputed, list);
+                
+                tools::List::list_up(&added_list);
             },
             2 => {
-                let list_backup= list.clone();
-                let deleted_list= deleting(list_backup);
-                list= deleted_list.clone();
-                list_up(deleted_list);
+                let index= inputing();
+                
+                let deleted_list= tools::Delete::deleting(index, list_backup);
+                
+                tools::List::list_up(&deleted_list);
             },
-            _ => list_up(list),
+            _ => tools::List::list_up(&list),
         }
     }
 
-    fn list_up(list: Vec<String>){
-        println!("{:?}", list)
-    }
-
-    fn adding(list: Vec<String>) -> Vec<String>{
-        let inputed= inputing_string();
-        let mut list_new= list.clone();
-
-        list_new.push(inputed);
-
-        list_new
-    }
-
-    fn deleting(list: Vec<String>) -> Vec<String>{
-        let index= inputing();
-        let mut list_new= list.clone();
-
-        list_new.remove(index as usize);
-
-        list_new
-    }
 
     fn inputing() -> i32{ 
         let mut std_number= String::new();   
@@ -70,5 +53,4 @@ fn main() {
         result
     }
 }
-
 
