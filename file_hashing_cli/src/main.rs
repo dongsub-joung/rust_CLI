@@ -4,20 +4,24 @@ fn main() {
     let file= selecteingFile();
 
     println!("1. Sha256, 2. sha512"); 
+    let mut result= String::new();
     let number: usize= inputing().parse().unwrap();
     
-    let mut result= String::new();
     loop {
         match number{
-            1usize => result= hashing::sha256(file),       
-            2usize => result= hashing::sha512(file),       
+            1usize => {
+                    result= hashing::sha256(file);
+                    break
+            },       
+            2usize => {
+                    result= hashing::sha512(file);
+                    break
+            },       
             _ => continue,                            
         }
-}                                     
-    
-    
+    }                                      
 
-    println!("Hello, world!");
+    println!("{}", result);
 
     fn selecteingFile() -> File{
         // path 
