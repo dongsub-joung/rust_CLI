@@ -17,13 +17,13 @@ pub mod io_file{
         Ok(content)
     }
 
-    pub fn saving_file(content: String) -> io::Result<()>{
+    pub fn saving_file(content: &[u8]) -> io::Result<()> {
         let mut file_to_write = File::create("output.txt")?;
     
         // Write the content to the new file
-        file_to_write.write_all(content.as_bytes())?;
-
-        println!("File content savied successfully!");
+        file_to_write.write_all(content)?;
+    
+        println!("File content saved successfully!");
     
         Ok(())
     }
