@@ -1,6 +1,7 @@
 use std::fs::File;
 use std::io::{self, Read, Write};
-
+use std::fs;
+use std::path::Path;
 
 pub mod io_file{
     use super::*;
@@ -25,6 +26,25 @@ pub mod io_file{
     
         println!("File content saved successfully!");
     
+        Ok(())
+    }
+
+    pub fn visit_dirs(dir: &Path) -> std::io::Result<()> {
+        if dir.is_dir() {
+            for entry in fs::read_dir(dir)? {
+                let entry = entry?;
+                let path = entry.path();
+    
+                if path.is_dir() {
+                    // If it's a directory, recurse into it
+                    visit_dirs(&path)?;
+                } else {
+                    // If it's a file, perform the desired operation
+                    println!("{}", path.display());
+                    // Do something with the file path here
+                }
+            }
+        }
         Ok(())
     }
 }

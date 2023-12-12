@@ -7,7 +7,7 @@ fn inputing()-> String{
     let mut buff= String::new();                 
     io::stdin().read_line(&mut buff).expect("unvalid value and format");
 
-    buff
+    buff.trim().to_string()
 }
 
 fn main() {
@@ -19,12 +19,12 @@ fn main() {
     let number: usize= inputing().trim().parse().expect("unvalid foramt- not int");
 
     println!("Set a absolute path");  
-    // let pwd= inputing();
-    // let pwd= "/home/kiririn/git/rust_CLI/file_hashing_cli/src/txt.txt";
-    let pwd= "/home/kiririn/git/rust_CLI/file_hashing_cli/txt.txt";
+    // visit_dirs() -> game over
+    let pwd= inputing();
+    // let pwd= "/home/kiririn/git/rust_CLI/file_hashing_cli/txt.txt";
     
     // let plaintext = "Hello, this is a secret message!";
-    let plaintext= io_file::io_file::selecteing_file(pwd)
+    let plaintext= io_file::io_file::selecteing_file(&pwd)
         .expect("can't parse the data");
 
     match number{
