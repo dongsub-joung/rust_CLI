@@ -1,48 +1,41 @@
+mod io_file;
+mod get_os;
+mod hash;
+
 use std::io;
 
+fn inputing()-> String{
+    let mut buff= String::new();                 
+    io::stdin().read_line(&mut buff).expect("unvalid value and format");
+    let str_data= buff;
+    buff.clear();
+    
+    str_data
+}
+
 fn main() {
-    let file= selecteingFile();
+    let mut result= String::new();
 
     println!("1. Sha256, 2. sha512"); 
-    let mut result= String::new();
-    let number: usize= inputing().parse().unwrap();
+    let number: usize= inputing().parse().expect("unvalid foramt- not int");
     
-    loop {
-        match number{
-            1usize => {
-                    result= hashing::sha256(file);
-                    break
-            },       
-            2usize => {
-                    result= hashing::sha512(file);
-                    break
-            },       
-            _ => continue,                            
-        }
+    println!("Set a absolute path");  
+    let pwd= inputing();
+    let file_data= io_file::io_file::selecteing_file(pwd.as_str()).expect("can't parse the data");
+
+    match number{
+        1usize => {
+                result= hash::hashing::sha256(file_data);
+        },       
+        2usize => {
+                result= hash::hashing::sha512(file_data);
+        },       
+        _ => println!("invalid value"),                            
     }                                      
 
-    println!("{}", result);
+    io_file::io_file::saving_file(file_data).expect("faild a saveing work");
 
-    fn selecteingFile() -> File{
-        // path 
-        // selecting
-        //
-    }
-
-    fn inputing()-> String{
-        let mut number= String::new();                 
-        io::stdin().read_line(&mut number).unwrap();
-        
-        number
-    }
+    println!("Done!");
 }
 
-pub mod hashing{
-    pub fn sha256(file :File) -> String{
-    
-    }
 
-    pub fn sha512(file: File) -> String{
-    
-    }
-}
