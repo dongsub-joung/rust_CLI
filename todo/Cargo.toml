@@ -8,4 +8,5 @@ edition = "2021"
 [dependencies]
 mysql = "23.0.1"
 openssl-sys = "0.9.80"
+rusqlite = "0.30.0"
 
