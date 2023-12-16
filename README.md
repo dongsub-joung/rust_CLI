@@ -1,14 +1,40 @@
 # rust_CLI
 Some tools written rust
 
-## file_hashing_cli
+## [D-Day](https://github.com/dongsub-joung/rust_CLI/tree/main/d-day)
 
-a tiny ransomware or file-saver
+```
+$ 2024 1 1
+> ID: 1: 2024 1 1, 
+> Difference in days until D-Day: 15
+
+end: ctrl^c
+```
+
+---  
+
+## [file hashing cli](https://github.com/dongsub-joung/rust_CLI/tree/main/file_hashing_cli)
+
+a tiny ransomware or file-saver  
+
+```
+$ 1. keep going, 2. pass
+> 1
+
+$ Set an absolute path
+> {/your/absolute/path}
+```
+
+> Make the entire directory hashing = game over
+
+---  
 
 ## [testing](https://github.com/dongsub-joung/rust_CLI/tree/main/testing)  
 
 `testing` is my rust lang cheatsheet
 
-## CLI TODO LIST
-> todo) bind mySQL  
+---  
+
+## [TODO LIST CLI](https://github.com/dongsub-joung/rust_CLI/tree/main/todo)
+> bind Diesel  
 > release cargo\
