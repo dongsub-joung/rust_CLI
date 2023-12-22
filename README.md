@@ -36,5 +36,9 @@ $ Set an absolute path
 ---  
 
 ## [TODO LIST CLI](https://github.com/dongsub-joung/rust_CLI/tree/main/todo)
-> bind Diesel  
-> release cargo\
+
+version sqlite (file managing)
+
+## TODO LIST CLI 2
+
+Req,Res from DB
