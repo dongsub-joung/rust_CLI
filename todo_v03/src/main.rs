@@ -142,7 +142,9 @@ pub mod init{
                 _ => {continue;}
             }
 
-            number: i32= inputing_str().trim().parse().unwrap();
+            println!("1. Join");
+            println!("2. Loin");
+            number= inputing_str().trim().parse().unwrap();
         }
     }
 }
