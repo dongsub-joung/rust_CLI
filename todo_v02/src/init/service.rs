@@ -3,11 +3,16 @@ pub mod service{
     use reqwest::{Client, Error};
     use serde_json::Error as OtherError;
 
-    pub fn add_todo(){
+    use crate::init::todo::Todo;
+
+    pub fn handle_json(json: String) -> Todo{
+        
+    }
+    pub fn get_todos(){
         
     }
 
-    pub fn new_client()->Result<Client, reqwest::Error>{
+    fn new_client()->Result<Client, reqwest::Error>{
         let client = Client::new();
         Ok(client)
     }

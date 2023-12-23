@@ -21,18 +21,14 @@ pub fn run(){
     let user_id = first_input;
     let user_pw = second_input;
 
-
-    println!("Todo");
-    let todo= inputing_str();
-    service::service::add_todos(todo);
-
-
-    // let user= user::utils::login(user_id, user_pw);
-    // if user.status == true {
-    //     // let todos= service::service::get_todos();
-    //     // print
-        
-    // }else {
-    //     println!("You are not join us");
-    // }
+    let user= user::utils::login(user_id, user_pw);
+    if user.status == true {
+        let todos_json= service::service::get_todos();
+        let todos= service::service::handle_json(todos_json);
+        for todo in todos {
+            todo::Todo::show_info(todo);
+        }
+    }else {
+        println!("You are not join us");
+    }
 }
