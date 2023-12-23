@@ -1,8 +1,7 @@
 
 pub mod service{
     use reqwest::{Client, Error};
-    use serde_json::{*, Error};
-    use super::*;
+    use serde_json::Error as OtherError;
 
     pub fn add_todo(){
         
@@ -12,19 +11,20 @@ pub mod service{
         let client = Client::new();
         Ok(client)
     }
-    pub async fn get_todos(body_txt: String) -> Result<(String), Error> {
+    pub async fn add_todos(body_txt: String) -> Result<String, Error> {
         let client= new_client().unwrap();
         // The URL you want to send the POST request to
-        let url = "https://your-api-endpoint.com/your-route";
+        let url = "https://todo.ngrok.app/todos";
     
         // Create a JSON payload
-        let value= format!("{}", body_txt);
+        let value= format!("{}", body_txt.trim());
         let json_payload = serde_json::json!({
-            "key1": body_txt,
+            "body_text": value,
         });
     
         // Send the POST request with the JSON payload
-        let response = client.post(url)
+        let response = client
+            .post(url)
             .json(&json_payload)
             .send()
             .await?;
@@ -37,7 +37,7 @@ pub mod service{
             println!("Request failed with status code: {}", response.status());
         }
         
-        const CODE: String= String::from("SUCESSS");
-        Ok((CODE))
+        let CODE= String::from("SUCESSS");
+        Ok(CODE)
     }
 }
