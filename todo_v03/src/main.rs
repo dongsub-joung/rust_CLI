@@ -94,7 +94,7 @@ pub mod service {
         hash_str
     }
     
-    pub fn create_post(user_id_str: &str, user_pw: &str){
+    pub fn create_user(user_id_str: &str, user_pw: &str){
         use crate::schema::users;
 
         let connection = &mut establish_connection();
@@ -112,6 +112,43 @@ pub mod service {
             .expect("Error saving new post");
         
         println!("creating successed");
+    }
+
+    use reqwest::Client;
+    use std::collections::HashMap;
+
+    pub async fn create_todo(todotext_inputed: &str) -> Result<(), Box<dyn std::error::Error>>{
+            // Create a reqwest Client
+        let client = Client::new();
+
+        // URL endpoint where you want to send the POST request
+        let url = "https://todo.ngrok.app/todo/add";
+
+        // Create a HashMap with the data to be sent in the request body
+        let mut data = HashMap::new();
+        data.insert("body_text", todotext_inputed);
+        // Add more data as needed
+
+        // Send the POST request asynchronously
+        let response = client.post(url)
+            .json(&data)
+            .send()
+            .await.unwrap();
+        
+        // Check if the request was successful (status code 200)
+        if response.status().is_success() {
+            println!("Request successful!");
+            // Handle the response data if needed
+            let body = response.text().await.unwrap();
+            println!("Response body: {}", body);
+        } else {
+            println!("Request failed with status code: {}", response.status());
+        }
+
+
+        println!("creating successed");
+
+        Ok(())
     }
 }
 
@@ -132,11 +169,11 @@ pub mod init{
 
     pub async fn run() {
         println!("1. Join");
-        println!("2. Loin");
+        println!("2. Login");
+        println!("3. Manage");
         let mut number: i32= inputing_str().trim().parse().unwrap();
 
         loop {
-            // thread::sleep(Duration::from_secs(10));
 
             match number {
                 1 =>{
@@ -146,7 +183,7 @@ pub mod init{
                     let user_id_str= &inputing_str();
                     println!("PW");
                     let user_pw= &inputing_str();
-                    service::create_post(user_id_str, user_pw);
+                    service::create_user(user_id_str, user_pw);
                 },
                 2 =>{
                     println!("ID");
@@ -165,13 +202,33 @@ pub mod init{
                         for todo in todos_json  {
                             println!("{:?}", todo);
                         }
+
+                        println!("Add todo");
+                        let todotext_inputed= &inputing_str();
+                        let _ = service::create_todo(todotext_inputed).await.unwrap();
                     }
                 },
+                3 => {
+                    println!("ID");
+                    let first_input= inputing_str();
+                
+                    println!("PW");
+                    let second_input = inputing_str();
+                
+                    let user_id = first_input;
+                    let user_pw = second_input;
+                
+                    let user= join::login(user_id, user_pw);
+                    if user.user_status == true {
+                       println!("remove");
+                    }
+                }
                 _ => {continue;}
             }
 
             println!("1. Join");
             println!("2. Loin");
+            println!("3. Manage");
             number= inputing_str().trim().parse().unwrap();
         }
     }
