@@ -1,3 +1,7 @@
+#![allow(dead_code)]
+#![allow(unused_variables)]
+#[warn(unused_must_use)]
+
 use self::models::*;
 use diesel::prelude::*;
 use todo_v03::*;
@@ -32,6 +36,28 @@ pub mod service {
     use self::schema::users::dsl::*;
     use sha2::{Digest, Sha256};
     use super::*;
+    use serde::{Deserialize, Serialize};
+
+    #[derive(Debug, Deserialize)]
+    pub struct Todo {
+        id: u64,
+        todotext: String,
+    }
+
+    use reqwest::Response;
+
+    pub async fn get_todos() -> Result<Vec<Todo>, ()> {
+        let url = "https://todo.ngrok.app/todos"; // Replace with your API endpoint
+    
+        let response = reqwest::get(url).await.unwrap(); // Perform GET request
+    
+        if response.status().is_success() {
+            let todos: Vec<Todo> = response.json().await.unwrap(); // Deserialize JSON into Vec<Todo>
+            Ok(todos)
+        } else {
+            Err(())
+        }
+    }
 
     pub fn get_user(user_name_id: &str) -> Result<Option<todo_v03::models::User>, diesel::result::Error>{
         // use self::schema::users::dsl::users;
@@ -89,9 +115,13 @@ pub mod service {
     }
 }
 
+
+#[allow(dead_code)]
 pub mod init{
     use super::*;
     use std::io::{self};
+    use reqwest::Response;
+    use service::get_todos; 
 
     fn inputing_str()->String{
         let mut input = String::new();
@@ -100,13 +130,14 @@ pub mod init{
         input
     }
 
-    pub fn run(){
-
+    pub async fn run() {
         println!("1. Join");
         println!("2. Loin");
         let mut number: i32= inputing_str().trim().parse().unwrap();
 
         loop {
+            // thread::sleep(Duration::from_secs(10));
+
             match number {
                 1 =>{
                     println!("You are not join us");
@@ -130,13 +161,10 @@ pub mod init{
                     let user= join::login(user_id, user_pw);
                     if user.user_status == true {
                         println!("OK");
-                        // let todos_json= service::service::get_todos();
-                        // let todos= service::service::handle_json(todos_json);
-                        // for todo in todos {
-                        //     todo::Todo::show_info(todo);
-                        // }
-                    }else {
-            
+                        let todos_json = service::get_todos().await.unwrap();
+                        for todo in todos_json  {
+                            println!("{:?}", todo);
+                        }
                     }
                 },
                 _ => {continue;}
@@ -148,6 +176,15 @@ pub mod init{
         }
     }
 }
-fn main() {
-    init::run();
+
+#[async_std::main]
+async fn main() {
+
+    tokio::runtime::Builder::new_current_thread()
+        .enable_all()
+        .build()
+        .unwrap()
+        .block_on(async {
+            init::run().await;
+        })
 }
