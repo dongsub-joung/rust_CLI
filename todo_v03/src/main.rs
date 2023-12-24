@@ -44,7 +44,25 @@ pub mod service {
         todotext: String,
     }
 
-    use reqwest::Response;
+    pub async fn remove_todo(_id: &str) -> Result<(), Box<dyn std::error::Error>> {
+        let client = Client::new();
+
+        // URL endpoint where you want to send the POST request
+        let url = "https://todo.ngrok.app/todo/remove";
+    
+        // Create a HashMap with the data to be sent in the request body
+        let mut data = HashMap::new();
+        let _id: i32= _id.trim().parse().unwrap();
+        data.insert("id", _id);
+        // Add more data as needed
+    
+        // Send the POST request
+        let response = client.post(url)
+            .json(&data)
+            .send();
+        
+        Ok(())
+    }
 
     pub async fn get_todos() -> Result<Vec<Todo>, ()> {
         let url = "https://todo.ngrok.app/todos"; // Replace with your API endpoint
@@ -60,7 +78,6 @@ pub mod service {
     }
 
     pub fn get_user(user_name_id: &str) -> Result<Option<todo_v03::models::User>, diesel::result::Error>{
-        // use self::schema::users::dsl::users;
         use self::schema::users::dsl::user_id;
 
         let connection = &mut establish_connection();
@@ -157,8 +174,6 @@ pub mod service {
 pub mod init{
     use super::*;
     use std::io::{self};
-    use reqwest::Response;
-    use service::get_todos; 
 
     fn inputing_str()->String{
         let mut input = String::new();
@@ -169,7 +184,7 @@ pub mod init{
 
     pub async fn run() {
         println!("1. Join");
-        println!("2. Login");
+        println!("2. Login-ADD");
         println!("3. Manage");
         let mut number: i32= inputing_str().trim().parse().unwrap();
 
@@ -221,13 +236,15 @@ pub mod init{
                     let user= join::login(user_id, user_pw);
                     if user.user_status == true {
                        println!("remove");
+                       let id_inputed= &inputing_str();
+                       service::remove_todo(id_inputed).await.unwrap();
                     }
                 }
                 _ => {continue;}
             }
 
             println!("1. Join");
-            println!("2. Loin");
+            println!("2. Loin-ADD");
             println!("3. Manage");
             number= inputing_str().trim().parse().unwrap();
         }
