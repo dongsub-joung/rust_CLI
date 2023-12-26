@@ -77,9 +77,9 @@ pub mod init{
                 2 =>{
 
                     let (user_id, user_pw) = id_and_pw();
-            
                     let user= join::login(user_id, user_pw);
-                    if user.user_status == true {
+                    
+                    if user.user_status{
                         println!("OK");
                         let todos_json = service::service::get_todos().await.unwrap();
                         for todo in todos_json  {
@@ -93,9 +93,9 @@ pub mod init{
                 },
                 3 => {
                     let (user_id, user_pw) = id_and_pw();
-            
                     let user= join::login(user_id, user_pw);
-                    if user.user_status == true {
+
+                    if user.user_status{
                        println!("removing id");
                        let id_inputed= &inputing_str();
                        service::service::remove_todo(id_inputed).await.unwrap();
