@@ -15,24 +15,18 @@ pub mod service {
         todotext: String,
     }
 
-    pub async fn remove_todo(_id: &str) -> Result<(), Box<dyn std::error::Error>> {
+    pub async fn remove_todo(target: &str) -> Result<&str, Box<dyn std::error::Error>> {
         let client = Client::new();
 
         // URL endpoint where you want to send the POST request
-        let url = "https://todo.ngrok.app/todo/remove";
-    
-        // Create a HashMap with the data to be sent in the request body
-        let mut data = HashMap::new();
-        let _id: i32= _id.trim().parse().unwrap();
-        data.insert("id", _id);
-        // Add more data as needed
+        let url = format!("https://todo.ngrok.app/todo/remove/{}", target);
     
         // Send the POST request
-        let response = client.post(url)
-            .json(&data)
-            .send();
+        let response = client
+            .get(url)
+            .send().await;
         
-        Ok(())
+        Ok("OK")
     }
 
     pub async fn get_todos() -> Result<Vec<Todo>, ()> {

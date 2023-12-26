@@ -47,8 +47,8 @@ pub mod init{
 
     pub fn menu(){
         println!("1. Join");
-        println!("2. Login-ADD");
-        println!("3. Manage");
+        println!("2. ADD");
+        println!("3. Manage(remove)");
     }
 
     pub fn id_and_pw() -> (String, String){
@@ -98,7 +98,8 @@ pub mod init{
                     if user.user_status{
                        println!("removing id");
                        let id_inputed= &inputing_str();
-                       service::service::remove_todo(id_inputed).await.unwrap();
+                       let res= service::service::remove_todo(id_inputed).await.unwrap();
+                        println!("{}", res);
                     }
                 }
                 _ => {continue;}
