@@ -39,6 +39,10 @@ $ Set an absolute path
 
 version sqlite (file managing)
 
-## TODO LIST CLI 2
+## [TODO LIST CLI 2](https://github.com/dongsub-joung/rust_CLI/tree/main/todo_v02)
 
-Req,Res from DB
+Architecture
+
+## [TODO LIST CLI v3](https://github.com/dongsub-joung/rust_CLI/tree/main/todo_v03)  
+
+default id abcd / pw 1234
