@@ -1,12 +1,11 @@
-#![allow(dead_code)]
-#![allow(unused_variables)]
-#[warn(unused_must_use)]
-
 use self::models::*;
 use todo_v03::*;
-
-#[path ="./service/mod.rs"]
 mod service;
+
+pub mod err_msg{
+    pub const NULL:&'static str="value is null";
+    pub const PARSING:&'static str="parsing err";
+}
 
 pub mod join{
     use super::*;
@@ -16,7 +15,9 @@ pub mod join{
         // get user from DB
         let user_id_clone= user_id.clone();
         let user_pw_clone= user_pw.clone();
-        let mut user= service::service::get_user(&user_id).unwrap().unwrap();
+        let mut user= service::service::get_user(&user_id)
+            .expect(err_msg::PARSING)
+            .expect(err_msg::NULL);
 
         // hasing pw
         let mut hasher = Sha256::new();
@@ -33,7 +34,6 @@ pub mod join{
     }
 }
 
-#[allow(dead_code)]
 pub mod init{
     use super::*;
     use std::io::{self};
@@ -63,10 +63,10 @@ pub mod init{
     pub async fn run() {
        
         menu();
-        let mut number: i32= inputing_str().trim().parse().unwrap();
+        let mut number: i32= inputing_str().trim().parse()
+            .expect(err_msg::PARSING);
 
         loop {
-
             match number {
                 1 =>{
                     println!("You are not join us");
@@ -75,20 +75,22 @@ pub mod init{
                     service::service::create_user(user_id_str.as_str(), user_pw.as_str());
                 },
                 2 =>{
-
                     let (user_id, user_pw) = id_and_pw();
                     let user= join::login(user_id, user_pw);
                     
                     if user.user_status{
                         println!("OK");
-                        let todos_json = service::service::get_todos().await.unwrap();
+                        let todos_json = service::service::get_todos().await
+                            .expect(err_msg::PARSING);
+
                         for todo in todos_json  {
                             println!("{:?}", todo);
                         }
 
                         println!("Add todo");
                         let todotext_inputed= &inputing_str();
-                        let _ = service::service::create_todo(todotext_inputed).await.unwrap();
+                        let _ = service::service::create_todo(todotext_inputed).await
+                            .expect(err_msg::PARSING);
                     }
                 },
                 3 => {
@@ -98,7 +100,8 @@ pub mod init{
                     if user.user_status{
                        println!("removing id");
                        let id_inputed= &inputing_str();
-                       let res= service::service::remove_todo(id_inputed).await.unwrap();
+                       let res= service::service::remove_todo(id_inputed).await
+                            .expect(err_msg::PARSING);
                         println!("{}", res);
                     }
                 }
@@ -106,7 +109,7 @@ pub mod init{
             }
 
             menu();
-            number= inputing_str().trim().parse().unwrap();
+            number= inputing_str().trim().parse().expect(err_msg::PARSING);
         }
     }
 }
