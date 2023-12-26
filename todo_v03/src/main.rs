@@ -92,18 +92,11 @@ pub mod init{
                     }
                 },
                 3 => {
-                    println!("ID");
-                    let first_input= inputing_str();
-                
-                    println!("PW");
-                    let second_input = inputing_str();
-                
-                    let user_id = first_input;
-                    let user_pw = second_input;
-                
+                    let (user_id, user_pw) = id_and_pw();
+            
                     let user= join::login(user_id, user_pw);
                     if user.user_status == true {
-                       println!("remove");
+                       println!("removing id");
                        let id_inputed= &inputing_str();
                        service::service::remove_todo(id_inputed).await.unwrap();
                     }
