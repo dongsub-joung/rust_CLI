@@ -1,9 +1,14 @@
 mod product;
-// product
+mod customer;
+
+use crate::product::*;
+use product::*;
+
 fn main() {
-    let managers= product::Product_Info::new("dongsub", "Inje");
-    let time= product::Date::new(24, 12, 2023);
-    let poki= product::Product::new("10", "1500", managers, time);
+    let manager= product::Product::new_product_iofo("dongsub".to_string()
+        , "inje".to_string());
+    let time= product::Product::new_date(24, 12, 2023);
+    let poki= product::Product::new("10", "1500", manager, time);
 
     poki.accounting(5);
 }
