@@ -29,6 +29,13 @@ $ Set an absolute path
 
 ---  
 
+# [shop_manage](https://github.com/dongsub-joung/rust_CLI/tree/main/shop_manage)
+
+> Refactor rust file directory
+
+
+---  
+
 ## [testing](https://github.com/dongsub-joung/rust_CLI/tree/main/testing)  
 
 `testing` is my rust lang cheatsheet
